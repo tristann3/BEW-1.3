@@ -54,7 +54,7 @@ it("should return the radius of a circle", function() {
   expect(radius).to.equal((Math.PI * 3) ** 2)
 })
 
-it("should return null on negative rectangle width or height", function() {
+it("should return null on negative radius", function() {
   const radius = utils.circleArea(-1)
   expect(radius).to.be.null
 })
@@ -85,13 +85,49 @@ it("Should create a new (object) Item with name and price", function() {
   expect(item).to.have.property("quantity", 1)
 })
 
-it("Should return an array containing all items in cart")
+it("Should return an array containing all items in cart", function() {
+  const cart = utils.getShoppingCart()
+  expect(cart).to.be.a("array")
+})
 
-it("Should add a new item to the shopping cart")
+it("Should add a new item to the shopping cart", function() {
+  const item = utils.createItem({
+    "name": "orange", 
+    "price": 0.79
+  })
+  utils.addItemToCart(item)
 
-it("Should return the number of items in the cart")
+  const cart = utils.getShoppingCart()
+  expect(cart).to.be.a("array")
+  expect(cart).to.have.length(1)
+})
 
-it("Should remove items from cart")
+it("Should return the number of items in the cart", function() {
+const item = utils.createItem({
+  "name": "orange", 
+  "price": 0.79
+})
+
+utils.addItemToCart(item)
+const numItems = utils.getNumItemsInCart()
+expect(numItems).to.be.a("number")
+expect(numItems).to.equal(1)
+})
+
+it("Should remove items from cart", function() {
+  const item = utils.createItem({
+    "name": "orange", 
+    "price": 0.79
+  })
+  utils.addItemToCart(item)
+  utils.addItemToCart(item)
+  utils.removeItemFromCart(item)
+  const cart = utils.getShoppingCart()
+
+  expect(cart).to.be.a("array")
+  expect(cart).to.have.length(1)
+  
+})
 
 // ========================================================
 // Stretch Challenges

@@ -28,7 +28,6 @@ const circleArea = r => {
     return null
   }
   return ((Math.PI * r) ** 2)
-
 }
 
 // ========================================================
@@ -45,23 +44,31 @@ const clearCart = () => {
 }
 
 const createItem = (name, price) => {
+  const item = {
+    "name": name, 
+    "price" : price
+  }
   return { name, price, quantity: 1 }
 }
 
 const getShoppingCart = () => {
   // should return the current state of shopping cart
+  return shoppingCart
 }
 
 const addItemToCart = (item) => {
   // should add item to shopping cart
+  shoppingCart.push(item)
 }
 
 const getNumItemsInCart = () => {
   // should return the total quantity of items in cart
+  return shoppingCart.length
 }
 
 const removeItemFromCart = (item) => {
   // should remove item from shopping cart
+  shoppingCart.pop(item)
 }
 
 module.exports = {
