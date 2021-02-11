@@ -32,9 +32,17 @@ it("should return the area of a rectangle", function() {
   expect(area).to.equal(12)
 })
 
+
+
 it("should return null on negative rectangle width or height", function() {
   const area = utils.area(-1, 3)
   expect(area).to.be.null
+})
+
+it("should be 48.2", function() {
+  const celsiusToFarenheit = utils.celsiusToFarenheit(9)
+  expect(celsiusToFarenheit).to.be.a("number")
+  expect(celsiusToFarenheit).to.equal(48.2)
 })
 
 it("should return the perimeter of a rectangle", function() {

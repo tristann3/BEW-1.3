@@ -14,6 +14,10 @@ const area = (w, h) => {
   return w * h
 }
 
+const celsiusToFarenheit = (celsius) => {
+  return celsius * 9 / 5 + 32
+}
+
 const perimeter = (w, h) => {
   // should return the perimeter
   if (w < 0 || h < 0){
@@ -74,5 +78,5 @@ const removeItemFromCart = (item) => {
 module.exports = {
   sayHello, area, perimeter, circleArea,
   clearCart, createItem, getShoppingCart, addItemToCart,
-  getNumItemsInCart, removeItemFromCart
+  getNumItemsInCart, removeItemFromCart, celsiusToFarenheit
 }
