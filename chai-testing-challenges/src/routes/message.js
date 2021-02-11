@@ -18,6 +18,9 @@ router.get('/', (req, res) => {
 router.get('/:messageId', (req, res) => {
     // TODO: Get the Message object with id matching `req.params.id`
     // using `findOne`
+    Message.findById(req.params.messageId). then( message => {
+      res.send(message)
+    })
 
     // TODO: Return the matching Message object as JSON
 })
@@ -30,7 +33,7 @@ router.post('/', (req, res) => {
         return User.findById(message.author)
     })
     .then(user => {
-        // console.log(user)
+        console.log(user)
         user.messages.unshift(message)
         return user.save()
     })

@@ -29,12 +29,22 @@ after((done) => {
 describe('Message API endpoints', () => {
     beforeEach((done) => {
         // TODO: add any beforeEach code here
-        done()
+        const sampleMessage = new Message({
+          title: 'messageTitle',
+          body: 'messageBody',
+          author: '000000000000000000000000'
+      })
+      sampleMessage.save()
+      .then(() => {
+          done()
+      })
     })
 
     afterEach((done) => {
         // TODO: add any afterEach code here
-        done()
+        Message.deleteMany({ title: { $ne: ''} }).then(() => {
+          done()
+        })
     })
 
     it('should load all messages', (done) => {
@@ -54,8 +64,22 @@ describe('Message API endpoints', () => {
     })
 
     it('should post a new message', (done) => {
-        // TODO: Complete this
-        done()
+      // TODO: Complete this
+      const message = new Message({
+        title: 'messageTitle',
+        body: 'messageBody',
+        author: '60189f975561f51e8ef4e9df'
+      })
+      chai.request(app)
+        .post('/messages/')
+        .set('content-type', 'application/x-www-form-urlencoded')
+        .send(message)
+        .end((error, response) => {
+          if(error) done(error);
+          expect(response).to.have.status(200);
+          console.log(sampleMessage.id)
+          done();
+        })
     })
 
     it('should update a message', (done) => {
