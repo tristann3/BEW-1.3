@@ -15,8 +15,20 @@ router.get("/", (req, res) => {
 });
 
 router.get("/new", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   res.render("posts-new");
+});
+
+router.get("/:id", (req, res) => {
+  // LOOK UP THE POST
+  post = Post.findById(req.params.id)
+    .lean()
+    .then((post) => {
+      res.render("posts-show", { post });
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 });
 
 router.post("/new", (req, res) => {
