@@ -6,6 +6,8 @@ const expressValidator = require("express-validator");
 // Set db
 require("./data/reddit-db");
 
+const Post = require("./models/post");
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -22,6 +24,18 @@ app.use(router);
 
 app.get("/", (req, res) => {
   res.render("home");
+});
+
+// SUBREDDIT
+app.get("/n/:subreddit", (req, res) => {
+  posts = Post.find({ subreddit: req.params.subreddit })
+    .lean()
+    .then((posts) => {
+      res.render("posts-index", { posts });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.listen(process.env.PORT, () => {
