@@ -21,8 +21,9 @@ router.get("/new", (req, res) => {
 
 router.get("/:id", (req, res) => {
   // LOOK UP THE POST
-  post = Post.findById(req.params.id)
+  Post.findById(req.params.id)
     .lean()
+    .populate("comments")
     .then((post) => {
       res.render("posts-show", { post });
     })

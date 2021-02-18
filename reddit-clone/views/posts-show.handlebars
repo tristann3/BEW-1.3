@@ -5,9 +5,12 @@
   </div>
 </div>
 
-<form action="/posts/{{post._id}}/comments" method="post">
+<form action="/comments/{{post._id}}" method="post">
   <textarea class='form-control' name="content" placeholder="Comment"></textarea>
   <div class="text-right">
     <button type="submit" class="btn btn-primary">Save</button>
   </div>
 </form>
+{{#each post.comments}}
+  <p>{{this.content}}</p>
+{{/each}}
