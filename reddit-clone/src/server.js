@@ -3,12 +3,16 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
+var cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 // Set db
 require("./data/reddit-db");
 
 const Post = require("./models/post");
 
 const app = express();
+
+app.use(cookieParser());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,7 +27,14 @@ const router = require("./routes/index.js");
 app.use(router);
 
 app.get("/", (req, res) => {
-  res.render("home");
+  posts = Post.find({})
+    .lean()
+    .then((posts) => {
+      res.render("posts-index", { posts });
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 });
 
 // SUBREDDIT

@@ -11,7 +11,6 @@ router.get("/", (req, res) => {
     .catch((err) => {
       console.log(err.message);
     });
-  console.log("at / route");
 });
 
 router.get("/new", (req, res) => {
