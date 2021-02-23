@@ -24,7 +24,10 @@ app.set("view engine", "handlebars");
 
 var checkAuth = (req, res, next) => {
   console.log("Checking authentication");
-  if (typeof req.cookies.nToken === "undefined" || req.cookies.nToken === null) {
+  if (
+    typeof req.cookies.nToken === "undefined" ||
+    req.cookies.nToken === null
+  ) {
     req.user = null;
   } else {
     var token = req.cookies.nToken;
@@ -45,6 +48,7 @@ app.get("/", (req, res) => {
 
   posts = Post.find({})
     .lean()
+    .populate("author")
     .then((posts) => {
       res.render("posts-index", { posts, currentUser });
     })
@@ -59,6 +63,7 @@ app.get("/n/:subreddit", (req, res) => {
 
   posts = Post.find({ subreddit: req.params.subreddit })
     .lean()
+    .populate("author")
     .then((posts) => {
       res.render("posts-index", { posts, currentUser });
     })
