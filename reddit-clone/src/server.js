@@ -58,12 +58,11 @@ app.get("/", (req, res) => {
 });
 
 // SUBREDDIT
-app.get("/n/:subreddit", (req, res) => {
+// SUBREDDIT
+app.get("/n/:subreddit", function (req, res) {
   var currentUser = req.user;
-
-  posts = Post.find({ subreddit: req.params.subreddit })
+  Post.find({ subreddit: req.params.subreddit })
     .lean()
-    .populate("author")
     .then((posts) => {
       res.render("posts-index", { posts, currentUser });
     })
