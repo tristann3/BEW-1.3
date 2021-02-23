@@ -6,12 +6,16 @@ const User = require("../models/user");
 
 // SIGN UP FORM
 router.get("/sign-up", (req, res) => {
-  res.render("sign-up");
+  var currentUser = req.user;
+
+  res.render("sign-up", { currentUser });
 });
 
 // LOGIN FORM
 router.get("/login", (req, res) => {
-  res.render("login");
+  var currentUser = req.user;
+
+  res.render("login", { currentUser });
 });
 
 // SIGN UP POST

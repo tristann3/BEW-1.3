@@ -22,15 +22,31 @@ app.use(expressValidator());
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+var checkAuth = (req, res, next) => {
+  console.log("Checking authentication");
+  if (typeof req.cookies.nToken === "undefined" || req.cookies.nToken === null) {
+    req.user = null;
+  } else {
+    var token = req.cookies.nToken;
+    var decodedToken = jwt.decode(token, { complete: true }) || {};
+    req.user = decodedToken.payload;
+  }
+
+  next();
+};
+app.use(checkAuth);
+
 // All middlewares above this comment
 const router = require("./routes/index.js");
 app.use(router);
 
 app.get("/", (req, res) => {
+  var currentUser = req.user;
+
   posts = Post.find({})
     .lean()
     .then((posts) => {
-      res.render("posts-index", { posts });
+      res.render("posts-index", { posts, currentUser });
     })
     .catch((err) => {
       console.log(err.message);
@@ -39,10 +55,12 @@ app.get("/", (req, res) => {
 
 // SUBREDDIT
 app.get("/n/:subreddit", (req, res) => {
+  var currentUser = req.user;
+
   posts = Post.find({ subreddit: req.params.subreddit })
     .lean()
     .then((posts) => {
-      res.render("posts-index", { posts });
+      res.render("posts-index", { posts, currentUser });
     })
     .catch((err) => {
       console.log(err);
