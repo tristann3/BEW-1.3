@@ -12,6 +12,8 @@ const Post = require("./models/post");
 
 const app = express();
 
+app.use(express.static("src/public"));
+
 app.use(cookieParser());
 
 app.use(bodyParser.json());
