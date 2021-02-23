@@ -75,6 +75,25 @@ describe("Posts", function () {
         done(err);
       });
   });
+  // login
+  it("should be able to login", function (done) {
+    agent
+      .post("/auth/login")
+      .send({ username: "poststest", password: "testposts" })
+      .end(function (err, res) {
+        res.should.have.status(200);
+        agent.should.have.cookie("nToken");
+        done();
+      });
+  });
+  // logout
+  it("should be able to logout", function (done) {
+    agent.get("/auth/logout").end(function (err, res) {
+      res.should.have.status(200);
+      agent.should.not.have.cookie("nToken");
+      done();
+    });
+  });
   after(function (done) {
     Post.findOneAndDelete(newPost)
       .then(function (res) {
